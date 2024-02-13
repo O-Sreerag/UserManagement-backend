@@ -1,7 +1,8 @@
 // services/mongoose.ts
 import mongoose from 'mongoose';
 
-const MONGODB_URI = "mongodb://127.0.0.1:27017/secondBadge";
+// const MONGODB_URI = "mongodb://127.0.0.1:27017/secondBadge";
+const MONGODB_URI = process.env.MONGODB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/secondBadge";
 
 const database = async() => {
     try {
