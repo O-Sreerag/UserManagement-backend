@@ -31,9 +31,7 @@ const adminRouter = require('./routes/adminRoutes');
 
 app.use(cors());
 app.use('/', usersRouter);
-app.use('/admin', adminRouter);
-
-console.log(process.env.UPLOADTHING_APP_ID)
+app.use('/admin', cors(), adminRouter);
 
 app.use(
     "/api/uploadthing",
