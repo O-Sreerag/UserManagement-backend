@@ -47,3 +47,67 @@ export const adminSendUsers = async (req: Request, res: Response) => {
     res.status(500).json({error: 'Internal server error'})
   }
 }
+
+export const adminEditUserData = async(req: Request, res: Response) => {
+  try {
+    console.log('Admin edit user data route');
+    
+    const userId = req.query.userId;
+    const { username, email } = req.body;
+    const user = await User.findById(userId);
+
+    if (user) {
+      user.username = username;
+      user.email = email;
+
+      const updatedUser = await user.save();
+      res.status(200).json(updatedUser);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch(error) {
+    console.error('Error editing user data:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+export const adminEditUserStatus = async(req: Request, res: Response) => {
+  try {
+    console.log('Admin edit user status route');
+    
+    const userId = req.query.userId;
+    const user = await User.findById(userId);
+  
+    if (user) {
+      user.isBlocked = !(user.isBlocked)
+  
+      const updatedUser = await user.save();
+      res.status(200).json(updatedUser);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch(error) {
+    console.error('Error editing user status:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+export const adminDeleteUser = async(req: Request, res: Response) => {
+  try {
+    console.log('Admin delete user route');
+    
+    const userId = req.query.userId;
+    const user = await User.findById(userId);
+  
+    if (user) {
+      await user.deleteOne();
+      
+      res.status(200).json({ message: 'User deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch(error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
