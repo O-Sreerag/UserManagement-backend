@@ -40,7 +40,7 @@ app.use(
       config: { 
         uploadthingId: process.env.UPLOADTHING_APP_ID,
         uploadthingSecret: process.env.UPLOADTHING_SECRET,
-        callbackUrl: "http://localhost:3000/api/uploadthing",
+        callbackUrl: "https://usermanagement-gfr6.onrender.com/api/uploadthing",
       },
       
     }),
