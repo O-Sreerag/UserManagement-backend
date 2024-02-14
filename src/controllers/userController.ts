@@ -53,9 +53,34 @@ export const loginUser = async (req: Request, res: Response) => {
       const token = generateToken(user._id.toString(), username as string);
   
       // If user and password are valid, return success response
-      res.status(200).json({ message: 'Login successful', token, username});
+      res.status(200).json({ message: 'Login successful', token, user});
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
     }
   };
+
+  export const addImage = async (req: Request, res: Response) => {
+    try {
+      console.log("add image user route")
+      const userId = req.query.userId
+      const { imageUrl } = req.body
+      console.log("data from frontend: ", userId, imageUrl)
+  
+      // Find user by email
+      const user = await User.findOne({ _id: userId });
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Add image URL to user document
+      user.imageUrls.push(imageUrl);
+      await user.save();
+  
+      // Return success response
+      return res.status(200).json({ success: true, message: 'Image added successfully' });
+    } catch (error) {
+      console.error('Error adding image:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }

@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   isBlocked: { type: Boolean, default: false },
+  imageUrls: [{ type: String }],
 });
 
 const User = mongoose.model('User', userSchema);

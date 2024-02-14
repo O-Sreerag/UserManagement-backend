@@ -56,6 +56,9 @@ export const adminEditUserData = async(req: Request, res: Response) => {
     const { username, email } = req.body;
     const user = await User.findById(userId);
 
+    console.log("userId, username, email :")
+    console.log(userId, username, email)
+
     if (user) {
       user.username = username;
       user.email = email;
